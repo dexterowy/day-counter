@@ -1,0 +1,40 @@
+.calendar {
+    /* width: 90%; */
+    /* padding: 30px 0; */
+    text-align: center;
+    color: #FFFFFF;
+    font-size: 1.1rem;
+    margin: 0 auto;
+    border-collapse: collapse;
+}
+
+
+.calendar td {
+    transition: background 0.7s;
+    user-select: none;
+}
+
+.calendar td, th {
+    padding: 7px;
+}
+
+.selected {
+    /* color: #000000; */
+    background: #155a77;
+    cursor: pointer;
+}
+
+.info {
+    width: 100%;
+    display: flex;
+    padding: 10px;
+    /* display: block; */
+    justify-content: space-between;
+    color: #FFFFFF;
+    font-size: 1.1rem;
+    /* table-layout: fixed; */
+}
+
+.info, th {
+    font-weight: bold;
+}

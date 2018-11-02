@@ -1,0 +1,27 @@
+.Daycounter {
+    width: 100vw;
+    transition: filter 0.2s;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    overflow: scroll;
+}
+
+.blured {
+    filter: blur(3px);
+}
+
+.main {
+    background-size: 100% 200%;
+    background-image: linear-gradient(to bottom, #FFFFFF 50%, #29ABE2 50%);
+    transition: background-position 0.2s linear;
+    height: calc(100% - 74px - 3em - 1.5em);
+    width: 100%;
+}
+
+.add {
+    background-position: 0 -100%;
+    transition: background-position 0.3s linear;
+    min-height: calc(100% - 74px - 3em - 1.5em);
+    overflow: scroll;
+}

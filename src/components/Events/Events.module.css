@@ -1,0 +1,12 @@
+.events {
+    padding: 15px 30px;
+    list-style-type: none;
+    display: block;
+    height: calc(100% - 45px - 0.9em);
+    /* height: 100%; */
+    overflow: scroll;
+}
+
+.placeholder {
+    text-align: center;
+}

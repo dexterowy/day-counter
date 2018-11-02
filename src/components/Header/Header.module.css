@@ -1,0 +1,25 @@
+.header {
+    padding: 30px;
+    background-size: 100% 200%;
+    background-image: linear-gradient(to bottom, #29ABE2 50%, #FFFFFF 50%);
+    color: #FFFFFF;
+    display: flex;
+    flex-flow: column wrap;
+    transition: background-position 0.2s linear;
+}
+
+.day {
+    font-size: 3em;
+    font-weight: bold;
+}
+
+.info {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.adding {
+    background-position: 0 -100%;
+    transition: background-position 0.3s linear;
+    color: #29ABE2;
+}
