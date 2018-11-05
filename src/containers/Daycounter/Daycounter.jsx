@@ -17,6 +17,7 @@ class Daycounter extends Component {
         date: new Date(),
         month: new Date().getMonth(),
         year: new Date().getFullYear(),
+        day: new Date().getDate(),
         modalMonthOpen: false,
         modalYearOpen: false,
         modalInfoOpen: false,
@@ -90,7 +91,7 @@ class Daycounter extends Component {
         const events = JSON.parse(localStorage.getItem('events')) || [];
         if(this.state.fetch) {
             const sortedEvents = events.map(item => {
-                const today = this.state.today;
+                const today = new Date(this.state.year, this.state.month, this.state.day);
                 const event = new Date(item.year, item.month, item.day);
                 const diff = Date.parse(event) - Date.parse(today);
                 const newItem = {
@@ -141,7 +142,7 @@ class Daycounter extends Component {
                 {...newEvent}
             ];
             const sortedEvents = events.map(item => {
-                const today = this.state.today;
+                const today = new Date(this.state.year, this.state.month, this.state.day);
                 const event = new Date(item.year, item.month, item.day);
                 const diff = Date.parse(event) - Date.parse(today);
                 const newItem = {
