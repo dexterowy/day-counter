@@ -97,11 +97,9 @@ class Daycounter extends Component {
                     ...item,
                     diff: diff
                 }
-                console.log(item);
                 return newItem
             })
             .sort((a, b) => Math.abs(a.diff) - Math.abs(b.diff));
-            console.log(events)
             this.setState({
                 events: events ? sortedEvents : [],
                 fetch: false
@@ -137,22 +135,6 @@ class Daycounter extends Component {
     }
 
     onAccept = (newEvent) => {
-        // let events = JSON.parse(localStorage.getItem('events')) || [];
-        // events.push({...newEvent})
-        
-        // const sortedEvents = events.map(item => {
-        //     const today = this.state.today;
-        //     const event = new Date(item.year, item.month, item.day);
-        //     const diff = Date.parse(event) - Date.parse(today);
-        //     const newItem = {
-        //         ...item,
-        //         diff: diff
-        //     }
-        //     console.log(item);
-        //     return newItem
-        // });
-        // sortedEvents.sort((a, b) => a.diff - b.diff);
-        // localStorage.setItem('events', JSON.stringify(sortedEvents))
         this.setState( prevState => {
             const events = [
                 ...prevState.events,
@@ -166,12 +148,10 @@ class Daycounter extends Component {
                     ...item,
                     diff: diff
                 }
-                console.log(item);
                 return newItem
             });
             sortedEvents.sort((a, b) => Math.abs(a.diff) - Math.abs(b.diff));
             localStorage.setItem('events', JSON.stringify(sortedEvents))
-            console.log(sortedEvents);
             return {
                 events: sortedEvents
             }
@@ -181,7 +161,6 @@ class Daycounter extends Component {
 
     onDelete = (key) => {
         this.onModalClose();
-        console.log(key);
         const events = JSON.parse(localStorage.getItem('events'));
         const newEvents = events.filter( (item, index) => {
             return index !== key
@@ -198,7 +177,6 @@ class Daycounter extends Component {
         })
     }
     onInfoOpen = (key) => {
-        console.log(key);
         this.setState( prevState => {
             return {
                 modalInfoOpen: true,

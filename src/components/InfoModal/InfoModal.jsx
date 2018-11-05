@@ -4,7 +4,6 @@ import Modal from '../UI/Modal/Modal';
 import * as classes from './InfoModal.module.css';
 
 const infoModal = (props) => {
-    console.log(props.event)
     return (
         <Modal show={props.show} info={true} onDelete={() => props.onDelete(props.event.key)} close={props.modalClose} save={props.saveManually} valid={props.valid}>
             <h3>{props.event.label}</h3>

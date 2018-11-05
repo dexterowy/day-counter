@@ -11,7 +11,6 @@ const events = (props) => {
             <Aux>
                 <ul className={classes.events}>
                     {props.events.map( (item, index) => {
-                        console.log(item.diff)
                         return (
                         <EventItem onInfo={props.onInfo} id={index} key={index} label={item.label} past={item.diff < 0} days={Math.floor(Math.abs(item.diff / 1000 / 3600 / 24))} />
                     )})}
