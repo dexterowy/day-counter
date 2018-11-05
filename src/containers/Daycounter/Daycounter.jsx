@@ -8,6 +8,7 @@ import { Route, withRouter } from 'react-router-dom';
 import Aux from '../../hoc/aux';
 import YearModal from '../../components/YearModal/YearModal';
 import MonthModal from '../../components/MonthModal/MonthModal';
+import InfoModal from '../../components/InfoModal/InfoModal';
 
 class Daycounter extends Component {
     state = {
@@ -18,7 +19,9 @@ class Daycounter extends Component {
         year: new Date().getFullYear(),
         modalMonthOpen: false,
         modalYearOpen: false,
+        modalInfoOpen: false,
         selected: true,
+        eventOpened: {},
         valid: true,
         fetch: true,
         events: []
@@ -58,7 +61,9 @@ class Daycounter extends Component {
     onModalClose = () => {
         this.setState({
             modalYearOpen: false,
-            modalMonthOpen: false
+            modalMonthOpen: false,
+            modalInfoOpen: false,
+            eventOpened: {}
         })
     }
 
@@ -82,26 +87,33 @@ class Daycounter extends Component {
         }
     }
     componentDidMount() {
-        const events = JSON.parse(localStorage.getItem('events'));
+        const events = JSON.parse(localStorage.getItem('events')) || [];
         if(this.state.fetch) {
+            const sortedEvents = events.map(item => {
+                const today = this.state.today;
+                const event = new Date(item.year, item.month, item.day);
+                const diff = Date.parse(event) - Date.parse(today);
+                const newItem = {
+                    ...item,
+                    diff: diff
+                }
+                console.log(item);
+                return newItem
+            })
+            .sort((a, b) => Math.abs(a.diff) - Math.abs(b.diff));
+            console.log(events)
             this.setState({
-                events: events ? events : [],
+                events: events ? sortedEvents : [],
                 fetch: false
             })
+            localStorage.setItem('events', JSON.stringify(sortedEvents));
         }
     }
     onChangeYearMaually = (e) => {
-        if(e.target.value >= 1970) {
             this.setState({
                 year: e.target.value,
-                valid: true
+                valid: e.target.value >= 1970
             })
-        }
-        else {
-            this.setState({
-                year: e.target.value,
-                valid: false
-            })}
     }
 
     onChangeMonthManually = (e) => {
@@ -125,24 +137,50 @@ class Daycounter extends Component {
     }
 
     onAccept = (newEvent) => {
-        let events = JSON.parse(localStorage.getItem('events')) || [];
-        console.log(this.props);
-        if(events) {
-            events.push({...newEvent})
-        }
-        else {
-            events = [{ ...newEvent}];
-        }
-        localStorage.setItem('events', JSON.stringify(events))
+        // let events = JSON.parse(localStorage.getItem('events')) || [];
+        // events.push({...newEvent})
+        
+        // const sortedEvents = events.map(item => {
+        //     const today = this.state.today;
+        //     const event = new Date(item.year, item.month, item.day);
+        //     const diff = Date.parse(event) - Date.parse(today);
+        //     const newItem = {
+        //         ...item,
+        //         diff: diff
+        //     }
+        //     console.log(item);
+        //     return newItem
+        // });
+        // sortedEvents.sort((a, b) => a.diff - b.diff);
+        // localStorage.setItem('events', JSON.stringify(sortedEvents))
         this.setState( prevState => {
+            const events = [
+                ...prevState.events,
+                {...newEvent}
+            ];
+            const sortedEvents = events.map(item => {
+                const today = this.state.today;
+                const event = new Date(item.year, item.month, item.day);
+                const diff = Date.parse(event) - Date.parse(today);
+                const newItem = {
+                    ...item,
+                    diff: diff
+                }
+                console.log(item);
+                return newItem
+            });
+            sortedEvents.sort((a, b) => Math.abs(a.diff) - Math.abs(b.diff));
+            localStorage.setItem('events', JSON.stringify(sortedEvents))
+            console.log(sortedEvents);
             return {
-                events: [...prevState.events, {...newEvent}]
+                events: sortedEvents
             }
         })
         this.props.history.push('/');
     }
 
     onDelete = (key) => {
+        this.onModalClose();
         console.log(key);
         const events = JSON.parse(localStorage.getItem('events'));
         const newEvents = events.filter( (item, index) => {
@@ -159,6 +197,19 @@ class Daycounter extends Component {
             }
         })
     }
+    onInfoOpen = (key) => {
+        console.log(key);
+        this.setState( prevState => {
+            return {
+                modalInfoOpen: true,
+                eventOpened: {
+                    ...prevState.events[key],
+                    key: key
+                }
+            }
+        })
+    }
+
 
     render() {
         const styles= this.props.location.pathname === '/' ? [classes.main, classes.events] : [classes.main, classes.add];
@@ -167,12 +218,13 @@ class Daycounter extends Component {
             <Aux>
                 <YearModal show={this.state.modalYearOpen} valid={this.state.valid} year={this.state.year} saveManually={this.onSaveManually} yearChange={this.onChangeYearMaually} modalClose={this.onModalClose}/>
                 <MonthModal valid={true} saveManually={this.onSaveManually} changeMonthManually={this.onChangeMonthManually} month={this.state.month} show={this.state.modalMonthOpen} modalClose={this.onModalClose}/>
+                <InfoModal event={this.state.eventOpened} onDelete={this.onDelete} show={this.state.modalInfoOpen} modalClose={this.onModalClose} />
                 <div className={this.state.modalYearOpen || this.state.modalMonthOpen ? 
                     [classes.Daycounter, classes.blured].join(" ") : 
                     classes.Daycounter}>
                     <Header day={this.state.today.getDay()} date={this.state.today.getDate()} month={this.state.today.getMonth()} />
                     <div className={styles.join(' ')}>
-                        <Route path="/" exact render={() => <Events onDelete={this.onDelete} today={this.state.today} events={this.state.events}/>} />
+                        <Route path="/" exact render={() => <Events onInfo={this.onInfoOpen} today={this.state.today} events={this.state.events}/>} />
                         <Route path="/add" exact 
                         render={() => <Add date={this.state.date} 
                                         next={this.onNextMonth} 

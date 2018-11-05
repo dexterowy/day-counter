@@ -6,7 +6,7 @@ import Counter from '../Counter/Counter';
 
 const eventItem = (props) => {
     return (
-        <li onClick={ () => props.onDelete(props.id)} className={classes.eventItem}>
+        <li onClick={ () => props.onInfo(props.id)} className={classes.eventItem}>
             <Label label={props.label}/>
             <Counter past={props.past} days={props.days}/>
         </li>

@@ -24,11 +24,25 @@
     justify-content: space-between;
 }
 
+.button {
+    margin: 30px 30px 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
 .btnOk, .btnCancel {
     outline: none;
     border: none;
     background: none;
     color: #29ABE2;
+}
+
+.btnDelete {
+     outline: none;
+     border: none;
+     background: none;
+     color: #ff0000;
 }
 
 .btnOk:disabled {
