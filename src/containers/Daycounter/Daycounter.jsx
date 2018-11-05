@@ -197,7 +197,7 @@ class Daycounter extends Component {
                 <YearModal show={this.state.modalYearOpen} valid={this.state.valid} year={this.state.year} saveManually={this.onSaveManually} yearChange={this.onChangeYearMaually} modalClose={this.onModalClose}/>
                 <MonthModal valid={true} saveManually={this.onSaveManually} changeMonthManually={this.onChangeMonthManually} month={this.state.month} show={this.state.modalMonthOpen} modalClose={this.onModalClose}/>
                 <InfoModal event={this.state.eventOpened} onDelete={this.onDelete} show={this.state.modalInfoOpen} modalClose={this.onModalClose} />
-                <div className={this.state.modalYearOpen || this.state.modalMonthOpen ? 
+                <div className={this.state.modalYearOpen || this.state.modalMonthOpen || this.state.modalInfoOpen ? 
                     [classes.Daycounter, classes.blured].join(" ") : 
                     classes.Daycounter}>
                     <Header day={this.state.today.getDay()} date={this.state.today.getDate()} month={this.state.today.getMonth()} />
