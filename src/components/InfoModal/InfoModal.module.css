@@ -1,3 +1,8 @@
 .date {
     margin: 20px 0 0 0;
 }
+
+.title {
+    word-wrap: break-word;
+    width: 100%;
+}

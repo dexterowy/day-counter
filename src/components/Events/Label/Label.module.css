@@ -1,3 +1,4 @@
 .label {
-    max-width: 60%;
+    max-width: 50%;
+    word-wrap: break-word;
 }

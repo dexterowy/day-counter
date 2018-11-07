@@ -12,6 +12,7 @@
 .calendar td {
     transition: background 0.7s;
     user-select: none;
+    height: 35px;
 }
 
 .calendar td, th {
