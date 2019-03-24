@@ -23,7 +23,7 @@ const events = (props) => {
         return(
             <Aux>
                 <ul className={[classes.events, classes.placeholder].join(" ")}>
-                    <span>Add some items!</span>
+                    <span>Add some events!</span>
                 </ul>
                 <Navigation />
             </Aux>
